@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXFileReference section */
-		D5A9295F2DCF1F240090C369 /* firstapp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = firstapp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		D5A9295F2DCF1F240090C369 /* boxtimer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = boxtimer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
-		D5A929612DCF1F240090C369 /* firstapp */ = {
+		D5A929612DCF1F240090C369 /* boxtimer */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			path = firstapp;
+			path = boxtimer;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -32,7 +32,7 @@
 		D5A929562DCF1F240090C369 = {
 			isa = PBXGroup;
 			children = (
-				D5A929612DCF1F240090C369 /* firstapp */,
+				D5A929612DCF1F240090C369 /* boxtimer */,
 				D5A929602DCF1F240090C369 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -40,7 +40,7 @@
 		D5A929602DCF1F240090C369 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				D5A9295F2DCF1F240090C369 /* firstapp.app */,
+				D5A9295F2DCF1F240090C369 /* boxtimer.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,9 +48,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		D5A9295E2DCF1F240090C369 /* firstapp */ = {
+		D5A9295E2DCF1F240090C369 /* boxtimer */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5A9296A2DCF1F270090C369 /* Build configuration list for PBXNativeTarget "firstapp" */;
+			buildConfigurationList = D5A9296A2DCF1F270090C369 /* Build configuration list for PBXNativeTarget "boxtimer" */;
 			buildPhases = (
 				D5A9295B2DCF1F240090C369 /* Sources */,
 				D5A9295C2DCF1F240090C369 /* Frameworks */,
@@ -61,13 +61,13 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
-				D5A929612DCF1F240090C369 /* firstapp */,
+				D5A929612DCF1F240090C369 /* boxtimer */,
 			);
-			name = firstapp;
+			name = boxtimer;
 			packageProductDependencies = (
 			);
 			productName = firstapp;
-			productReference = D5A9295F2DCF1F240090C369 /* firstapp.app */;
+			productReference = D5A9295F2DCF1F240090C369 /* boxtimer.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -85,7 +85,7 @@
 					};
 				};
 			};
-			buildConfigurationList = D5A9295A2DCF1F240090C369 /* Build configuration list for PBXProject "firstapp" */;
+			buildConfigurationList = D5A9295A2DCF1F240090C369 /* Build configuration list for PBXProject "boxtimer" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -99,7 +99,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				D5A9295E2DCF1F240090C369 /* firstapp */,
+				D5A9295E2DCF1F240090C369 /* boxtimer */,
 			);
 		};
 /* End PBXProject section */
@@ -303,7 +303,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		D5A9295A2DCF1F240090C369 /* Build configuration list for PBXProject "firstapp" */ = {
+		D5A9295A2DCF1F240090C369 /* Build configuration list for PBXProject "boxtimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5A929682DCF1F270090C369 /* Debug */,
@@ -312,7 +312,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5A9296A2DCF1F270090C369 /* Build configuration list for PBXNativeTarget "firstapp" */ = {
+		D5A9296A2DCF1F270090C369 /* Build configuration list for PBXNativeTarget "boxtimer" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D5A9296B2DCF1F270090C369 /* Debug */,

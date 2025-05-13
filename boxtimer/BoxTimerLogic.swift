@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-/// Manages all timer logic and state.
+/// manages all timer logic an state.
 class WorkoutTimer: ObservableObject {
     // MARK: – Configurable
     @Published var totalRounds: Int = 3

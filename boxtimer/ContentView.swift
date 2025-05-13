@@ -1,11 +1,10 @@
 import SwiftUI
 
-// Animated Angular Gradient that adapts to Work/Rest state
 struct AngularGradientView: View {
     var isWorking: Bool
     var isResting: Bool
     var isRunning: Bool
-    var isMirrored: Bool = false // optional for left/right out-of-phase effect
+    var isMirrored: Bool = false
 
     @State private var centerY: CGFloat = 0.792
     @State private var isPulsingUp = true
@@ -42,7 +41,7 @@ struct AngularGradientView: View {
                     // Both sides in sync
                     centerY = isPulsingUp ? 0.99 : 0.01
                 } else if isResting {
-                    // One side up, one down based on `isMirrored`
+                    // One side up, one down
                     centerY = isPulsingUp
                     ? (isMirrored ? 0.5 : 0.75)
                         : (isMirrored ? 0.75 : 0.5)
