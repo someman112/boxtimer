@@ -1,5 +1,12 @@
 import SwiftUI
 
+extension UIApplication {
+    func endEditing() {
+        sendAction(#selector(UIResponder.resignFirstResponder),
+                   to: nil, from: nil, for: nil)
+    }
+}
+
 struct AngularGradientView: View {
     var isWorking: Bool
     var isResting: Bool
@@ -8,7 +15,7 @@ struct AngularGradientView: View {
 
     @State private var centerY: CGFloat = 0.792
     @State private var isPulsingUp = true
-    @State private var pulseTimer = Timer.publish(every: 1.5, on: .main, in: .common).autoconnect()
+    @State private var pulseTimer = Timer.publish(every: 1.0, on: .main, in: .common).autoconnect()
 
     let workingColors = [
         Color(hue: 0.33, saturation: 0.2, brightness: 0.35),
@@ -34,7 +41,7 @@ struct AngularGradientView: View {
         .onReceive(pulseTimer) { _ in
             guard isRunning else { return }
 
-            withAnimation(.easeInOut(duration: 1.5)) {
+            withAnimation(.easeInOut(duration: 1.0)) {
                 isPulsingUp.toggle()
 
                 if isWorking {
@@ -54,6 +61,7 @@ struct AngularGradientView: View {
 struct MaskedTimeField: View {
     @Binding var totalSeconds: Double
     @State private var text: String = "00:00"
+    @FocusState private var isFocused: Bool
 
     var minSeconds = 0
     var maxSeconds = 120 * 60
@@ -104,7 +112,6 @@ struct ContentView: View {
     @GestureState private var isPressedPause = false
     var body: some View {
         ZStack{
-            
             HStack(spacing: 0) {
                 AngularGradientView(
                     isWorking: timerVM.isWorking,
@@ -119,6 +126,8 @@ struct ContentView: View {
                     isRunning: timerVM.isRunning,
                     isMirrored: false
                 )
+            }.onTapGesture {
+                UIApplication.shared.endEditing()
             }
             
             VStack(spacing: 30) {
@@ -144,17 +153,57 @@ struct ContentView: View {
 
                 // Progress Bar
                 GeometryReader { geo in
+                    let totalRounds = timerVM.totalRounds
+                    let workDuration = timerVM.roundTime
+                    let restDuration = timerVM.restTime
+                    let totalDuration = Double(totalRounds) * workDuration + Double(totalRounds - 1) * restDuration
+
+                    // Prepare segments: alternating work/rest segments
+                    let segments: [(color: Color, fraction: CGFloat)] = (0..<(totalRounds * 2 - 1)).map { index in
+                        let isWork = index % 2 == 0
+                        let segmentDuration = isWork ? workDuration : restDuration
+                        let fraction = CGFloat(segmentDuration / totalDuration)
+                        return (isWork ? .green : .red, fraction)
+                    }
+
+                    let normalizedProgress = timerVM.progress
+                    
+                    // Precompute filled widths per segment
+                    var remaining = normalizedProgress
+                    let fillFractions: [CGFloat] = segments.map { segment in
+                        let fill = min(remaining, segment.fraction)
+                        remaining -= fill
+                        return fill
+                    }
+
                     ZStack(alignment: .leading) {
-                        Rectangle().fill(Color.white.opacity(0.3)).cornerRadius(15)
-                        Rectangle()
-                            .fill(Color.white)
-                            .cornerRadius(15)
-                            .frame(width: geo.size.width * CGFloat(timerVM.progress))
-                            .animation(.linear, value: timerVM.timeRemaining)
+                        // Background plan (low opacity)
+                        HStack(spacing: 0) {
+                            ForEach(segments.indices, id: \.self) { i in
+                                Rectangle()
+                                    .fill(segments[i].color.opacity(0.2))
+                                    .frame(width: geo.size.width * segments[i].fraction)
+                            }
+                        }
+                        .cornerRadius(15)
+
+                        // Overlay actual progress (high opacity)
+                        HStack(spacing: 0) {
+                            ForEach(segments.indices, id: \.self) { i in
+                                let fillWidth = geo.size.width * fillFractions[i]
+                                Rectangle()
+                                    .fill(segments[i].color.opacity(fillFractions[i] > 0 ? 1.0 : 0.0))
+                                    .frame(width: fillWidth)
+                            }
+                        }
+                        .cornerRadius(15)
                     }
                 }
                 .frame(height: 6)
                 .padding(.horizontal, 40)
+
+
+
 
                 // Config
                 VStack(spacing: 16) {
@@ -197,8 +246,7 @@ struct ContentView: View {
                             MaskedTimeField(totalSeconds: $timerVM.restTime)
                     }
                     }
-                }
-                .padding(.horizontal, 40)
+                }.padding(.horizontal, 40)
 
                 // Controls
                 HStack(spacing: 40) {
@@ -270,3 +318,15 @@ struct ContentView: View {
 #Preview {
     ContentView()
 }
+
+@main
+struct BoxtimerApp: App {
+    var body: some Scene {
+        WindowGroup {
+            NavigationStack{
+                ContentView()
+            }
+        }
+    }
+}
+
